@@ -6,7 +6,7 @@
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:30:50 by cholm             #+#    #+#             */
-/*   Updated: 2017/12/03 21:21:36 by cholm            ###   ########.fr       */
+/*   Updated: 2017/12/06 20:40:03 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,6 @@ int		ft_atoi(char *str)
 		i++;
 	}
 	return (result * sign);
-}
-
-//Fonction pour trouver le milieu de la pyramide (la colonne vertebrale)
-
-int 	ft_get_col(int size)
-{
-	int i;
-	int j;
-	int col;
-	int x;
-
-	i = 1;
-	j = 1;
-	x = 1;
-	while (j < size)
-	{
-		x += 2;
-		j++;
-	}
-	col = ((x * 7) / 2) + 1;
-	printf("col -> %d\n", col);
-	return (col);
 }
 
 //Fonction pour calculer la hauteur de la pyramide
@@ -112,49 +90,60 @@ int 	ft_get_cols(int size)
 
 //Fonction qui affiche la pyramide
 
-void	ft_sastantua(int size, int col)
+void	ft_sastantua(int size)
 {
 	int i;
 	int j;
-	int l;
+	int s;
+	int star;
+	int x;
 	int line;
 	int cols;
+	int temp;
 	int colonne;
 
 
 	i = 0;
 	j = 0;
-	l = 1;
-	colonne = col;
+	s = 3 * size;
+	star = 1;
+	x = 0;
+	temp = s;
 	line = ft_get_lines(size);
 	cols = ft_get_cols(size);
+	colonne = (cols / 2) + 1;
+   printf("colonne vertebrale -> %d\n", colonne);	
 	while (i < line)
 	{
 		while (j < cols)
 		{
-			ft_putchar('@');
-			if (j == 0)
+			while (s > 0)
 			{
-				while (j < colonne - 2)
-				{
-					ft_putchar('+');
-					j++;
-				}
-			}
-			if (j == colonne - 2)
-			{
-				ft_putchar('#');
+				ft_putchar(' ');
+				s--;
 				j++;
-				while (j < cols - 2)
-				{
-					ft_putchar('+');
-					j++;
-				}
-
 			}
+			ft_putchar('/');
 			j++;
+			while (x < star)
+			{
+				ft_putchar('*');
+				x++;
+				j++;
+			}
+			ft_putchar('\\');
+			j++;
+			while (j < cols)
+			{
+				ft_putchar(' ');
+				j++;
+			}
 		}
 		ft_putchar('\n');
+		
+		s = temp - (i + 1);
+		x = 0;
+		star += 2;
 		j = 0;
 		i++;
 	}
@@ -171,8 +160,7 @@ int		main(int argc, char **argv)
 	if (argc == 2)
 	{
 		nbr = ft_atoi(argv[1]);
-		col = ft_get_col(nbr);
-		ft_sastantua(nbr, col);
+		ft_sastantua(nbr);
 	}
 	else
 		ft_putchar('\n');
