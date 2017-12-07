@@ -6,7 +6,7 @@
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:30:50 by cholm             #+#    #+#             */
-/*   Updated: 2017/12/07 17:43:44 by cholm            ###   ########.fr       */
+/*   Updated: 2017/12/07 18:11:08 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int 	ft_get_lines(int size)
 
 int 	ft_get_cols(int size)
 {
-	int i;
+/*	int i;
 	int cols;
 	int j;
 
@@ -94,9 +94,26 @@ int 	ft_get_cols(int size)
 		if (size == 5)
 			cols = 71;
 		if (size == 6)
-			cols = 95;
+		cols = 95;
 	}
-	return (cols);
+//	cols = (size * size) + (9 * size) - 3;
+*/	int floor;
+	int width;
+	int floor_step;
+	
+	floor = 1;
+	width = 1;
+	floor_step = 4;
+	while (floor <= size)
+	{
+		width += 2 * (2 + floor);
+		floor++;
+		width += floor_step;
+		if (floor % 2 && floor < size)
+			floor_step += 2;
+	}
+	width -= floor_step;
+	return (width);
 }
 
 //Fonction qui affiche la pyramide
