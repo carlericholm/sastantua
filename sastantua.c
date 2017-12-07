@@ -6,7 +6,7 @@
 /*   By: cholm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:30:50 by cholm             #+#    #+#             */
-/*   Updated: 2017/12/06 20:40:03 by cholm            ###   ########.fr       */
+/*   Updated: 2017/12/07 17:43:44 by cholm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,17 @@ int 	ft_get_cols(int size)
 		i++;
 	}
 	cols *= j;
+	if (size > 1 && size < 4)
+		cols = cols - 2;
+	else
+		cols = cols + 2;
+	if (size > 4)
+	{
+		if (size == 5)
+			cols = 71;
+		if (size == 6)
+			cols = 95;
+	}
 	return (cols);
 }
 
@@ -97,6 +108,9 @@ void	ft_sastantua(int size)
 	int s;
 	int star;
 	int x;
+	int l;
+	int k;
+	int b;
 	int line;
 	int cols;
 	int temp;
@@ -105,22 +119,25 @@ void	ft_sastantua(int size)
 
 	i = 0;
 	j = 0;
-	s = 3 * size;
+	b = 0;
 	star = 1;
 	x = 0;
-	temp = s;
+	l = 0;
+	k = 2;
 	line = ft_get_lines(size);
 	cols = ft_get_cols(size);
+	printf("cols ---> %d\n", cols);
 	colonne = (cols / 2) + 1;
-   printf("colonne vertebrale -> %d\n", colonne);	
+	s = colonne - 2;
+	temp = s;
+   printf("s-> %d\n", s);	
 	while (i < line)
 	{
 		while (j < cols)
 		{
-			while (s > 0)
+			while ((s - j) >= 1)
 			{
 				ft_putchar(' ');
-				s--;
 				j++;
 			}
 			ft_putchar('/');
@@ -140,10 +157,35 @@ void	ft_sastantua(int size)
 			}
 		}
 		ft_putchar('\n');
-		
-		s = temp - (i + 1);
+		if (i == k)
+		{ 
+			l++;
+			if (l >= 3)
+			{
+				s -= 4;
+				temp -= 3;
+				k += 4;
+				k += b++;
+				star += 8;
+			}
+			else
+			{
+				s -= 3;
+				temp -= 2;
+				k += 4;
+				k += b++;
+				star += 6;
+			}
+		}
+		else
+		{
+			s = temp - (i + 1);
+			star += 2;
+		}
+//		printf("s--> %d\n", s);
+	//	printf("temp --> %d\n", temp);
+	//	printf("i --> %d\n", i);
 		x = 0;
-		star += 2;
 		j = 0;
 		i++;
 	}
@@ -166,3 +208,5 @@ int		main(int argc, char **argv)
 		ft_putchar('\n');
 	return (0);
 }
+
+
